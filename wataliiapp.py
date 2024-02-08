@@ -116,15 +116,11 @@ import pickle
 from os.path import join, dirname, realpath
 
 # Load the model
-with open(join(dirname(realpath(__file__)), "model/"), "rb") as f:
+import pickle
+
+# Load the model
+with open("model/", "rb") as f:
     model = pickle.load(f)
-
-# Save the model as a new pickle file
-output_file_path = "histgradient-tanzania-tourism-model.pkl"
-with open(output_file_path, "wb") as f:
-    pickle.dump(model, f)
-
-print("Model saved as", output_file_path)
 
 # Load the model
 #model_path = "model/xgb_model.pkl"
