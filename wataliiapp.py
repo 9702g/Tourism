@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+from os.path import dirname, join, realpath
 
 # Header
 st.header("Kenya Tourism Expenditure Prediction")
@@ -102,12 +103,13 @@ if my_form.form_submit_button("Make Prediction"):
         "payment_mode": payment_mode, "first_trip": first_trip,
         "most_impressing": most_impressing
     }
-
+with open(
+    join(dirname(realpath(__file__)), "model/xgb_model.pkl"),
+    "rb",
+) as f:
+    model = pickle.load(f)
     # Load the model
-    model_path = "model/xgb_model.pkl"
-    if os.path.exists(model_path):
-        with open(model_path, "rb") as f:
-            model = pickle.load(f)
+    
     else:
         st.error("Model file not found. Please upload a valid model file.")
 
