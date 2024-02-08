@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
-import pickle
+#import pickle
 
 # Header
 st.header("Kenya Tourism Expenditure Prediction")
@@ -113,13 +113,21 @@ if st.button("Make Prediction"):
     # Now you can use input_data to make predictions with your model
 
 
+import os
+
+directory = r"V:\Kenyan data\new_tou_app"
+
+for dirname, _, filenames in os.walk(directory):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
 # Load the model
-model_path = "V:\\Kenyan data\\new_tou_app\\xgb_model.pkl"
-if os.path.exists(model_path):
-    with open(model_path, "rb") as f:
-        model = pickle.load(f)
-else:
-    st.error("Model file not found. Please upload a valid model file.")
+#model_path = "V:\\Kenyan data\\new_tou_app\\xgb_model.pkl"
+#if os.path.exists(model_path):
+#   with open(model_path, "rb") as f:
+      #  model = pickle.load(f)
+#else:
+   # st.error("Model file not found. Please upload a valid model file.")
 
 # If form submitted
 
