@@ -112,14 +112,27 @@ if st.button("Make Prediction"):
     }
     # Now you can use input_data to make predictions with your model
 
+import pickle
+from os.path import join, dirname, realpath
 
 # Load the model
-model_path = "model/"
-if os.path.exists(model_path):
-    with open(model_path, "rb") as f:
-        model = pickle.load(f)
-else:
-    st.error("Model file not found. Please upload a valid model file.")
+with open(join(dirname(realpath(__file__)), "model/"), "rb") as f:
+    model = pickle.load(f)
+
+# Save the model as a new pickle file
+output_file_path = "histgradient-tanzania-tourism-model.pkl"
+with open(output_file_path, "wb") as f:
+    pickle.dump(model, f)
+
+print("Model saved as", output_file_path)
+
+# Load the model
+#model_path = "model/xgb_model.pkl"
+#if os.path.exists(model_path):
+   # with open(model_path, "rb") as f:
+    #    model = pickle.load(f)
+#else:
+ #   st.error("Model file not found. Please upload a valid model file.")
 
 # If form submitted
 
