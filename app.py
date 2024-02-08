@@ -4,7 +4,7 @@ import pickle
 import os
 
 # Load the trained model
-model_path = "V:\\Kenyan data\\kenya_tourism_model.pkl"
+model_path = "kenya_tourism_model.pkl"
 with open(model_path, 'rb') as file:
     model = pickle.load(file)
 
