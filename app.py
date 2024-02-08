@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import os
 
 # Load the trained model
 model_path = "V:\\Kenyan data\\kenya_tourism_model.pkl"
