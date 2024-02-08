@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
+import os
 import pickle
-from os.path import dirname, join, realpath
 
 # Header
 st.header("Kenya Tourism Expenditure Prediction")
@@ -11,8 +11,15 @@ st.image("V:\\Kenyan data\\new_tou_app\\images (1).jpg")
 # Form
 my_form = st.form(key="financial_form")
 
+# Function to transform Yes and No options
+@st.cache
+def func(value):
+    return "Yes" if value == 1 else "No"
+
+import streamlit as st
+
 # Input for country
-country = my_form.selectbox("Country", [
+country = st.selectbox("Country", [
     "SWITZERLAND", "UNITED KINGDOM", "CHINA", "SOUTH AFRICA", "UNITED STATES OF AMERICA",
     "NIGERIA", "INDIA", "BRAZIL", "CANADA", "MALTA", "MOZAMBIQUE", "RWANDA", "AUSTRIA",
     "MYANMAR", "GERMANY", "KENYA", "ALGERIA", "IRELAND", "DENMARK", "SPAIN", "FRANCE",
@@ -32,64 +39,64 @@ country = my_form.selectbox("Country", [
 ])
 
 # Input for age group
-age_group = my_form.selectbox("Age Group", ["1-24", "25-44", "45-64", "65+"])
+age_group = st.selectbox("Age Group", ["1-24", "25-44", "45-64", "65+"])
 
 # Input for travel with
-travel_with = my_form.selectbox("Travel With", ["Friends/Relatives", "Alone", "Spouse", "Children", "Spouse and Children"])
+travel_with = st.selectbox("Travel With", ["Friends/Relatives", "Alone", "Spouse", "Children", "Spouse and Children"])
 
 # Input for total number of females
-total_female = my_form.number_input("Total Number of Females", min_value=0)
+total_female = st.number_input("Total Number of Females", min_value=0)
 
 # Input for total number of males
-total_male = my_form.number_input("Total Number of Males", min_value=0)
+total_male = st.number_input("Total Number of Males", min_value=0)
 
 # Input for purpose
-purpose = my_form.selectbox("Purpose", [
+purpose = st.selectbox("Purpose", [
     "Leisure and Holidays", "Visiting Friends and Relatives", "Business",
     "Meetings and Conference", "Volunteering", "Scientific and Academic", "Other"
 ])
 
 # Input for main activity
-main_activity = my_form.selectbox("Main Activity", [
+main_activity = st.selectbox("Main Activity", [
     "Wildlife tourism", "Cultural tourism", "Mountain climbing", "Beach tourism",
     "Conference tourism", "Hunting tourism", "Bird watching", "Business", "Diving and Sport Fishing"
 ])
 
 # Input for tour arrangement
-tour_arrangement = my_form.selectbox("Tour Arrangement", ["Independent", "Package Tour"])
+tour_arrangement = st.selectbox("Tour Arrangement", ["Independent", "Package Tour"])
 
 # Input for package_transport_international
-package_transport_international = my_form.selectbox("Package Transport International", ["No", "Yes"])
+package_transport_international = st.selectbox("Package Transport International", ["No", "Yes"])
 
 # Input for package_food
-package_food = my_form.selectbox("Package Food", ["No", "Yes"])
+package_food = st.selectbox("Package Food", ["No", "Yes"])
 
 # Input for package_transport_local
-package_transport_local = my_form.selectbox("Package Transport Local", ["No", "Yes"])
+package_transport_local = st.selectbox("Package Transport Local", ["No", "Yes"])
 
 # Input for package_sightseeing
-package_sightseeing = my_form.selectbox("Package Sightseeing", ["No", "Yes"])
+package_sightseeing = st.selectbox("Package Sightseeing", ["No", "Yes"])
 
 # Input for package_guided_tour
-package_guided_tour = my_form.selectbox("Package Guided Tour", ["No", "Yes"])
+package_guided_tour = st.selectbox("Package Guided Tour", ["No", "Yes"])
 
 # Input for package_insurance
-package_insurance = my_form.selectbox("Package Insurance", ["No", "Yes"])
+package_insurance = st.selectbox("Package Insurance", ["No", "Yes"])
 
 # Input for nights_stayed
-nights_stayed = my_form.number_input("Nights Stayed", min_value=0)
+nights_stayed = st.number_input("Nights Stayed", min_value=0)
 
 # Input for payment_mode
-payment_mode = my_form.selectbox("Payment Mode", ["Cash", "Credit Card", "Other", "Travellers Cheque"])
+payment_mode = st.selectbox("Payment Mode", ["Cash", "Credit Card", "Other", "Travellers Cheque"])
 
 # Input for first_trip
-first_trip = my_form.selectbox("First Trip", ["No", "Yes"])
+first_trip = st.selectbox("First Trip", ["No", "Yes"])
 
 # Input for most_impressing
-most_impressing = my_form.text_input("Most Impressions")
+most_impressing = st.text_input("Most Impressions")
 
 # Button to make prediction
-if my_form.form_submit_button("Make Prediction"):
+if st.button("Make Prediction"):
     # Prepare input data
     input_data = {
         "country": country, "age_group": age_group, "travel_with": travel_with,
@@ -103,6 +110,9 @@ if my_form.form_submit_button("Make Prediction"):
         "payment_mode": payment_mode, "first_trip": first_trip,
         "most_impressing": most_impressing
     }
+    # Now you can use input_data to make predictions with your model
+
+
 # Load the model
 model_path = "V:\\Kenyan data\\new_tou_app\\xgb_model.pkl"
 if os.path.exists(model_path):
@@ -111,7 +121,8 @@ if os.path.exists(model_path):
 else:
     st.error("Model file not found. Please upload a valid model file.")
 
-    # Create DataFrame from input data
+# If form submitted
+
     data = pd.DataFrame(input_data, index=[0])
 
     # Factorize object columns
